@@ -9,10 +9,10 @@ Install by copying all four files from the standalone
 enable **Settings > System > Advanced > Plugin System**, then open
 **Home > Plugins > Reading Statistics**.
 
-Requirements: Razor-Crest with `stats.native.v1` and `ui.dashboard.v1`.
-Basic CrossPoint firmware cannot render this dashboard; installing the
-plugin there should display its README instead. The included `manifest.json` declares both required capabilities so
-Plugin Hub can filter out unsupported firmware.
+Requirements: firmware advertising both `stats.native.v1` and `ui.dashboard.v1`.
+Compatibility depends on these capabilities, not the firmware name or version.
+Razor-Crest is a known compatible firmware when both are exposed. Firmware without either capability cannot render the dashboard; it may display the README instead.
+The `manifest.json` declares both required capabilities so Plugin Hub can filter out unsupported firmware.
 
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records
@@ -24,7 +24,7 @@ choose CrossInk or vCodex, then **select that same source again** to confirm
 the conversion. Back cancels before the second selection. The two source rows
 show their complete names and summaries, and the status/confirmation message
 wraps below them instead of occupying a truncated third list row. The operation
-writes Razor-Crest BIN snapshots only, never legacy source files.
+writes native statistics BIN snapshots only, never legacy source files.
 
 CrossInk imports global counts and per-book EPUB cache counts for books whose
 original paths are discoverable through recent books or the native index.

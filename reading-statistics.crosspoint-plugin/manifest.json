@@ -5,10 +5,6 @@
   "author": "Jadehawk",
   "version": "0.1.0",
   "compatibility": {
-    "firmware_family": [
-      "crosspoint"
-    ],
-    "plugin_api_min": 1,
     "requires": [
       "stats.native.v1",
       "ui.dashboard.v1"

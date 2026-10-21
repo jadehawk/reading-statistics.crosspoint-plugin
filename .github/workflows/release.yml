@@ -50,4 +50,4 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" dist/reading-statistics-*.zip \
             --title "$GITHUB_REF_NAME" \
-            --notes "Reading Statistics native dashboard. Requires Razor-Crest with stats.native.v1 and ui.dashboard.v1."
+            --notes "Offline Reading Statistics dashboard. Requires firmware capabilities stats.native.v1 and ui.dashboard.v1; Razor-Crest is a known compatible firmware."

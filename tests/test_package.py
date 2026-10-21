@@ -21,8 +21,8 @@ class PluginPackageTests(unittest.TestCase):
         self.assertEqual(meta["name"], "reading-statistics")
         self.assertEqual(PLUGIN.name, meta["name"] + ".crosspoint-plugin")
         self.assertRegex(meta["version"], r"^\d+\.\d+\.\d+$")
-        self.assertEqual(meta["compatibility"]["firmware_family"], ["crosspoint"])
-        self.assertGreaterEqual(meta["compatibility"]["plugin_api_min"], 1)
+        self.assertEqual(set(meta["compatibility"]), {"requires"})
+        self.assertNotIn("firmware", meta["compatibility"])
         self.assertEqual(set(meta["compatibility"]["requires"]), REQUIRED_CAPS)
         self.assertEqual(set(meta["files"]), REQUIRED_FILES)
         for name in meta["files"]:

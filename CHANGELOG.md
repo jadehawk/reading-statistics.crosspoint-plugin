@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0
 
 - Six-page, capability-gated, offline Reading Statistics dashboard.
 - Global and per-book reading metrics, weekly graph and activity calendar.
