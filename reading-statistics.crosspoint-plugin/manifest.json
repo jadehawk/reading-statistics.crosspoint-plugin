@@ -1,0 +1,23 @@
+{
+  "name": "reading-statistics",
+  "title": "Reading Statistics",
+  "description": "Offline reading statistics dashboard with native BIN history and CrossInk/vCodex import.",
+  "author": "Jadehawk",
+  "version": "0.1.0",
+  "compatibility": {
+    "firmware_family": [
+      "crosspoint"
+    ],
+    "plugin_api_min": 1,
+    "requires": [
+      "stats.native.v1",
+      "ui.dashboard.v1"
+    ]
+  },
+  "files": [
+    "manifest.json",
+    "device.json",
+    "README.md",
+    "DETAILS.md"
+  ]
+}

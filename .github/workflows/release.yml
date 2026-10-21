@@ -1,0 +1,53 @@
+name: Validate and package Reading Statistics
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate payload and dashboard
+        run: python tests/test_package.py
+      - name: Package plugin
+        run: python tools/package.py
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reading-statistics-package
+          path: dist/reading-statistics-*.zip
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check tag matches manifest version
+        shell: bash
+        run: |
+          version=$(python -c 'import json; print(json.load(open("reading-statistics.crosspoint-plugin/manifest.json"))["version"])')
+          test "v$version" = "$GITHUB_REF_NAME" || {
+            echo "Version mismatch: tag=$GITHUB_REF_NAME manifest=$version" >&2
+            exit 1
+          }
+      - name: Build release asset
+        run: python tools/package.py
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/reading-statistics-*.zip \
+            --title "$GITHUB_REF_NAME" \
+            --notes "Reading Statistics native dashboard. Requires Razor-Crest with stats.native.v1 and ui.dashboard.v1."
