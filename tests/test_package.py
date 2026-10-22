@@ -45,6 +45,20 @@ class PluginPackageTests(unittest.TestCase):
         self.assertLessEqual((PLUGIN / "device.json").stat().st_size, 8192)
         known = {"metric", "week_bars", "heatmap_28", "book_list", "legacy_import"}
         self.assertTrue(all(w["type"] in known for p in pages for w in p["widgets"]))
+        self.assertEqual(
+            [w["label"] for w in pages[0]["widgets"]],
+            ["Reading Time", "Sessions", "Page Turns", "Avg. / Turn", "Active Days", "7-Day Total"]
+        )
+        self.assertEqual(
+            [w["label"] for w in pages[4]["widgets"]],
+            ["Reading Time", "Sessions", "Page Turns", "Active Days"]
+        )
+        self.assertTrue(all(w.get("scope") == "current-book" for w in pages[4]["widgets"]))
+        self.assertEqual(pages[3]["widgets"][0]["label"], "Open Book Library")
+        for page in pages:
+            for widget in page["widgets"]:
+                if widget.get("field") == "qualified_turns":
+                    self.assertEqual(widget["label"], "Page Turns")
 
     def test_no_browser_component_or_embedded_data(self):
         self.assertFalse((PLUGIN / "plugin.js").exists())

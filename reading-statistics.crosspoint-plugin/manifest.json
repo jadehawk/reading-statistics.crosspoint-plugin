@@ -3,7 +3,7 @@
   "title": "Reading Statistics",
   "description": "Offline reading statistics dashboard with native BIN history and CrossInk/vCodex import.",
   "author": "Jadehawk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": {
     "requires": [
       "stats.native.v1",
