@@ -3,7 +3,7 @@
   "title": "Reading Statistics",
   "description": "Offline reading statistics dashboard with native BIN history and CrossInk/vCodex import.",
   "author": "Jadehawk",
-  "version": "0.1.1",
+  "version": "0.1.6",
   "compatibility": {
     "requires": [
       "stats.native.v1",
@@ -14,6 +14,13 @@
     "manifest.json",
     "device.json",
     "README.md",
-    "DETAILS.md"
+    "DETAILS.md",
+    "icons/book.pbm",
+    "icons/clock.pbm",
+    "icons/sessions.pbm",
+    "icons/turns.pbm",
+    "icons/calendar.pbm",
+    "icons/bars.pbm",
+    "icons/speed.pbm"
   ]
 }
