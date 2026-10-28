@@ -32,6 +32,11 @@ class PluginPackageTests(unittest.TestCase):
             self.assertNotIn("..", Path(name).parts)
             self.assertTrue((PLUGIN / name).is_file(), name)
 
+    def test_home_shortcut_contract(self):
+        shortcut = self.manifest["home_shortcut"]
+        self.assertEqual(shortcut, {"label": "Reading Statistics", "target": "dashboard", "icon": "stats"})
+        self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
+
     def test_dashboard_layout(self):
         doc = self.device
         self.assertEqual(doc["dashboard"]["source"], "reading-stats.v1")

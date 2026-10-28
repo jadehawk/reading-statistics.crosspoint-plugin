@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.7 (release)
+
+- Register an optional **Reading Statistics** Home shortcut using the firmware's `home.shortcuts.v1` primitive; it opens the existing native dashboard directly.
+- Manage the shortcut from **Settings > Display > Home Menu Buttons** on supported firmware, including enabling it after freeing a Home slot and reordering Home buttons.
+- Keep existing six-page statistics, sleep-screen support, and stored reading history unchanged. Firmware without the optional Home shortcut capability can still use the plugin through **Home > Plugins** when its required dashboard capabilities are present.
+- Verified the Home shortcut on XTEink X3 hardware and passed package contract tests.
+
 ## 0.1.6 (release)
 
 - Publish the completed V1 Reading Statistics dashboard with current-book covers, progress bars, All Books, optional history removal and CrossInk/vCodex import.

@@ -7,7 +7,7 @@ Install by copying the complete payload, including its `icons/` folder, from the
 `reading-statistics.crosspoint-plugin/` payload folder into
 `/.crosspoint/plugins/reading-statistics/` on the SD card. In firmware,
 enable **Settings > Connectivity > Plugins**, then open
-**Home > Plugins > Reading Statistics**.
+**Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. The firmware launches the same native dashboard; if all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
 
 Requirements: firmware advertising both `stats.native.v1` and `ui.dashboard.v1`.
 Compatibility depends on these capabilities, not the firmware name or version.
