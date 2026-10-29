@@ -8,11 +8,7 @@
         "title": "Overall Statistics",
         "widgets": [
           {
-            "type": "hero",
-            "show_value": false,
-            "field": "total_seconds",
-            "scope": "current-book",
-            "icon": "book",
+            "type": "reading_snapshot",
             "border": "rounded",
             "corner_radius": 12
           },

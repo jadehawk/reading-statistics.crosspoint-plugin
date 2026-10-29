@@ -52,7 +52,7 @@ class PluginPackageTests(unittest.TestCase):
         self.assertEqual(pages[3]["widgets"][0]["type"], "heatmap_28")
         self.assertEqual(pages[3]["widgets"][0]["label"], "Last 4 Weeks")
         self.assertLessEqual((PLUGIN / "device.json").stat().st_size, 8192)
-        known = {"metric", "hero", "week_bars", "heatmap_28", "book_list", "legacy_import"}
+        known = {"metric", "hero", "reading_snapshot", "week_bars", "heatmap_28", "book_list", "legacy_import"}
         self.assertTrue(all(w["type"] in known for p in pages for w in p["widgets"]))
         self.assertEqual(
             [w.get("label", "") for w in pages[0]["widgets"]],
@@ -89,15 +89,17 @@ class PluginPackageTests(unittest.TestCase):
 
     def test_dashboard_card_contract(self):
         pages = self.device["dashboard"]["pages"]
-        self.assertEqual(pages[0]["widgets"][0]["type"], "hero")
-        self.assertEqual(pages[0]["widgets"][0]["scope"], "current-book")
-        self.assertIs(pages[0]["widgets"][0]["show_value"], False)
+        self.assertEqual(pages[0]["widgets"][0], {
+            "type": "reading_snapshot", "border": "rounded", "corner_radius": 12
+        })
+        self.assertTrue(all(w.get("scope", "global") == "global" for w in pages[0]["widgets"]))
+        self.assertEqual(pages[1]["widgets"][0]["type"], "hero")
         self.assertTrue(pages[1]["widgets"][0].get("show_value", True))
         self.assertEqual([w["type"] for w in pages[0]["widgets"][1:5]], ["metric"] * 4)
         self.assertEqual(set(pages[4]["widgets"][0]), {"type", "label"})
         self.assertTrue(all(w.get("border") in ("rounded", "chamfered")
                             for page in (pages[0], pages[1])
-                            for w in page["widgets"] if w["type"] in ("metric", "hero")))
+                            for w in page["widgets"] if w["type"] in ("metric", "hero", "reading_snapshot")))
 
     def test_no_browser_component_or_embedded_data(self):
         self.assertFalse((PLUGIN / "plugin.js").exists())

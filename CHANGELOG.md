@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.8 (release)
+
+- Replace the Overall Statistics current-book hero with a Reading Snapshot showing this month's reading time, current streak, active days this month, and book count.
+- Keep lifetime totals and the seven-day chart below the snapshot; use the compact "Books" label on all supported screens.
+- Current Book falls back to the most recently opened book when no reader is active.
+- Preserve stored history and import behavior; the new snapshot is rendered by updated compatible firmware.
+
 ## 0.1.7 (release)
 
 - Register an optional **Reading Statistics** Home shortcut using the firmware's `home.shortcuts.v1` primitive; it opens the existing native dashboard directly.
