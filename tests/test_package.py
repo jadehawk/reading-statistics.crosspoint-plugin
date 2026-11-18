@@ -44,23 +44,24 @@ class PluginPackageTests(unittest.TestCase):
         pages = doc["dashboard"]["pages"]
         self.assertEqual([p["title"] for p in pages], [
             "Overall Statistics", "Current Book", "Your Week",
-            "Activity Calendar", "All Books", "Import Statistics"
+            "Reading Calendar", "All Books", "Import Statistics"
         ])
         self.assertTrue(all(0 < len(p["widgets"]) <= 6 for p in pages))
         self.assertEqual([w["type"] for w in pages[4]["widgets"]], ["book_list"])
         self.assertEqual([w["type"] for w in pages[5]["widgets"]], ["legacy_import"])
-        self.assertEqual(pages[3]["widgets"][0]["type"], "heatmap_28")
-        self.assertEqual(pages[3]["widgets"][0]["label"], "Last 4 Weeks")
+        self.assertEqual(pages[3]["title"], "Reading Calendar")
+        self.assertEqual([w["type"] for w in pages[3]["widgets"]],
+                         ["month_calendar", "month_insights"])
         self.assertLessEqual((PLUGIN / "device.json").stat().st_size, 8192)
-        known = {"metric", "hero", "reading_snapshot", "week_bars", "heatmap_28", "book_list", "legacy_import"}
+        known = {"metric", "hero", "reading_snapshot", "week_bars", "time_of_day", "month_calendar", "month_insights", "book_list", "legacy_import"}
         self.assertTrue(all(w["type"] in known for p in pages for w in p["widgets"]))
         self.assertEqual(
             [w.get("label", "") for w in pages[0]["widgets"]],
-            ["", "Reading Time", "Sessions", "Page Turns", "Active Days", "Latest 7 Days"]
+            ["", "Sessions", "Page Turns", "Time of Day", "Latest 7 Days"]
         )
         self.assertEqual(
             [w.get("label", "") for w in pages[1]["widgets"]],
-            ["", "Sessions", "Page Turns", "Active Days", "Avg. / Turn"]
+            ["", "Sessions", "Page Turns", "Active Days", "Avg. / Turn", "Time of Day"]
         )
         self.assertTrue(all(w.get("scope") == "current-book" for w in pages[1]["widgets"]))
         self.assertEqual(pages[0]["title"], "Overall Statistics")
@@ -95,7 +96,24 @@ class PluginPackageTests(unittest.TestCase):
         self.assertTrue(all(w.get("scope", "global") == "global" for w in pages[0]["widgets"]))
         self.assertEqual(pages[1]["widgets"][0]["type"], "hero")
         self.assertTrue(pages[1]["widgets"][0].get("show_value", True))
-        self.assertEqual([w["type"] for w in pages[0]["widgets"][1:5]], ["metric"] * 4)
+        self.assertEqual([w["type"] for w in pages[0]["widgets"][1:]],
+                         ["metric", "metric", "time_of_day", "week_bars"])
+        self.assertTrue(all(w["compact"] is True for w in pages[0]["widgets"][1:3]))
+        self.assertTrue(all(w["compact"] is True for w in pages[1]["widgets"][1:5]))
+        self.assertEqual(pages[1]["widgets"][-1]["scope"], "current-book")
+        self.assertEqual([w["type"] for w in pages[2]["widgets"]],
+                         ["week_bars", "time_of_day", "metric"])
+        self.assertEqual(pages[2]["widgets"][1]["period"], "week")
+        for page_index in (0, 1, 2):
+            for widget in pages[page_index]["widgets"]:
+                if widget["type"] in ("time_of_day", "week_bars"):
+                    self.assertEqual(widget["border"], "rounded")
+
+        for widget in pages[3]["widgets"]:
+            self.assertEqual(widget["border"], "rounded")
+            self.assertEqual(widget["corner_radius"], 9)
+            self.assertNotIn("scope", widget)
+            self.assertNotIn("field", widget)
         self.assertEqual(set(pages[4]["widgets"][0]), {"type", "label"})
         self.assertTrue(all(w.get("border") in ("rounded", "chamfered")
                             for page in (pages[0], pages[1])

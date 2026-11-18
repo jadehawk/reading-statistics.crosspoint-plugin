@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.9 (release)
+
+- Redesign Overall Statistics with compact Sessions and Page Turns cards, separated snapshot metrics, and a new Time of Day chart instead of duplicate Reading Time and Active Days cards.
+- Show a book-specific Time of Day profile on Current Book and a recent-seven-day profile on Your Week; timing data accumulates from new, clock-trusted sessions in compatible firmware, without fabricating historical hours.
+- Replace the four-week activity grid with a numbered, Monday-first monthly Reading Calendar and Best Day, Daily Average, and Reading Consistency insights.
+- Use the active page title in the firmware header, consistent built-in Noto Sans dashboard typography, responsive metric labels, and improved compact-card spacing on X3 and Picco.
+- Requires updated compatible firmware for the new native dashboard widgets; existing stored reading records remain intact.
+
 ## 0.1.8 (release)
 
 - Replace the Overall Statistics current-book hero with a Reading Snapshot showing this month's reading time, current streak, active days this month, and book count.

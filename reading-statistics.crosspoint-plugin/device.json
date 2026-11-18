@@ -14,17 +14,10 @@
           },
           {
             "type": "metric",
-            "label": "Reading Time",
-            "field": "total_seconds",
-            "icon": "clock",
-            "border": "rounded",
-            "corner_radius": 9
-          },
-          {
-            "type": "metric",
             "label": "Sessions",
             "field": "sessions",
             "icon": "sessions",
+            "compact": true,
             "border": "rounded",
             "corner_radius": 9
           },
@@ -33,20 +26,21 @@
             "label": "Page Turns",
             "field": "qualified_turns",
             "icon": "turns",
+            "compact": true,
             "border": "rounded",
             "corner_radius": 9
           },
           {
-            "type": "metric",
-            "label": "Active Days",
-            "field": "active_days",
-            "icon": "calendar",
+            "type": "time_of_day",
+            "label": "Time of Day",
             "border": "rounded",
             "corner_radius": 9
           },
           {
             "type": "week_bars",
-            "label": "Latest 7 Days"
+            "label": "Latest 7 Days",
+            "border": "rounded",
+            "corner_radius": 9
           }
         ]
       },
@@ -68,6 +62,7 @@
             "icon": "sessions",
             "border": "rounded",
             "corner_radius": 9,
+            "compact": true,
             "scope": "current-book"
           },
           {
@@ -77,6 +72,7 @@
             "icon": "turns",
             "border": "rounded",
             "corner_radius": 9,
+            "compact": true,
             "scope": "current-book"
           },
           {
@@ -86,6 +82,7 @@
             "icon": "calendar",
             "border": "rounded",
             "corner_radius": 9,
+            "compact": true,
             "scope": "current-book"
           },
           {
@@ -94,6 +91,14 @@
             "field": "seconds_per_turn",
             "icon": "speed",
             "border": "chamfered",
+            "corner_radius": 9,
+            "compact": true,
+            "scope": "current-book"
+          },
+          {
+            "type": "time_of_day",
+            "label": "Time of Day",
+            "border": "rounded",
             "corner_radius": 9,
             "scope": "current-book"
           }
@@ -104,7 +109,16 @@
         "widgets": [
           {
             "type": "week_bars",
-            "label": "Latest 7 Days"
+            "label": "Latest 7 Days",
+            "border": "rounded",
+            "corner_radius": 9
+          },
+          {
+            "type": "time_of_day",
+            "label": "Time of Day",
+            "period": "week",
+            "border": "rounded",
+            "corner_radius": 9
           },
           {
             "type": "metric",
@@ -117,17 +131,15 @@
         ]
       },
       {
-        "title": "Activity Calendar",
+        "title": "Reading Calendar",
         "widgets": [
           {
-            "type": "heatmap_28",
-            "label": "Last 4 Weeks"
+            "type": "month_calendar",
+            "border": "rounded",
+            "corner_radius": 9
           },
           {
-            "type": "metric",
-            "label": "Active Days",
-            "field": "active_days",
-            "icon": "calendar",
+            "type": "month_insights",
             "border": "rounded",
             "corner_radius": 9
           }

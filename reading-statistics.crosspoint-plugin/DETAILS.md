@@ -2,7 +2,7 @@
 
 An **on-device**, offline statistics dashboard for firmware supporting the required native statistics and dashboard capabilities.
 
-Explore global and individual-book reading time, counted sessions, qualified page turns, a seven-day chart, and a 28-day activity calendar.
+Explore global and individual-book reading time, counted sessions, qualified page turns, time-of-day patterns, a seven-day chart, and a numbered monthly Reading Calendar with Best Day, Daily Average, and Reading Consistency insights.
 
 The sixth page can preview and import existing CrossInk and vCodex reading history into the firmware's native binary records. Import requires a second confirmation, preserves source files, and uses durable receipts to prevent duplicate imports.
 

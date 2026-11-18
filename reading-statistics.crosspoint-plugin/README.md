@@ -17,7 +17,7 @@ The `manifest.json` declares both required capabilities so Plugin Hub can filter
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records
 and widget renderer. This host supports `metric`, `reading_snapshot`,
-`week_bars`, `heatmap_28`, `book_list`,
+`week_bars`, `time_of_day`, `month_calendar`, `month_insights`, `book_list`,
 `legacy_import` and a full-width `hero`. `metric` and `hero` widgets can use
 custom 80x80 monochrome binary PBM icons in `icons/`, plus `square`, `rounded` or
 `chamfered` borders and a 0..16-pixel corner radius. Metric-card titles are centered;
@@ -27,23 +27,40 @@ smaller icons; the renderer always clamps icons to card bounds. See the firmware
 `docs/dashboard-cards-v1.md` for the complete reusable card contract.
 The first page is titled **Overall Statistics** and shows a Reading Snapshot:
 current calendar-month reading time, consecutive-day streak, active days this
-month and count of books with recorded history, followed by global lifetime
-totals and the seven-day chart. The snapshot is independent of an open book.
+month and count of books with recorded history. The compact Sessions and Page
+Turns cards have icon dividers; the Reading Time and Active Days duplicate cards
+were removed. A rounded Time of Day panel shows recorded session-start reading
+time by morning, afternoon, evening and night, followed by the seven-day chart.
+The snapshot is independent of an open book.
 If the device date is invalid, calendar-dependent values show -- (the count
 of tracked books remains visible). The second page is **Current Book** and
 shows per-book totals, using the most recently opened book when no reader
-session is active. All six pages have centered page titles beneath the
-Reading Statistics header, without `(n/6)` counters. The Current Book hero
+session is active. Current Book also shows its own Time of Day profile, and
+Your Week uses the same latest seven recorded reading days as the seven-day bar chart. The buckets are
+Morning 06:00-11:59, Afternoon 12:00-16:59, Evening 17:00-20:59, and Night
+21:00-05:59; all qualifying seconds belong to the session-start bucket.
+Time-of-day collection begins with this firmware update: older reading records
+and imported statistics remain intact but cannot be assigned invented hours.
+If the local device clock is unreliable, no new time bucket is attributed.
+Each interactive page uses its own title in the existing firmware header,
+rendered with built-in Noto Sans independently of the active SD theme.
+The header's emblem/Back target and clock/battery remain unchanged.
+No duplicate title row or `(n/6)` counter is shown; the optional headerless
+sleep overview retains its centered page title. The Current Book hero
 shows the enlarged cover at left, with title, author and series/index on the
 right, and the progress bar and percentage below.
 All Books directly shows cover thumbnails, title, author, reading time, and
 completion percentage; selecting a row opens the Current Book detail dashboard.
 For imported history with a moved EPUB, only an unambiguous title/author
 match recovers the Home cover, author, and progress; statistics stay separate.
-Dashboard order: **Overall Statistics → Current Book → Your Week → Activity Calendar → All Books → Import Statistics**.
-The Activity Calendar is Monday-first and displays four aligned Monday–Sunday
-calendar weeks (with future cells left empty). The seven-day bar chart remains
-a rolling seven-day view.
+Dashboard order: **Overall Statistics → Current Book → Your Week → Reading Calendar → All Books → Import Statistics**.
+Reading Calendar displays the current device-local month with numbered Monday-first
+dates, four grayscale reading-time levels (none, under 15 minutes, 15–44 minutes,
+45+ minutes), and an outline for today. Future days are never attributed activity.
+The monthly insights show the most-read day (duration/date), average reading time
+per active day, and the share of elapsed calendar days with reading. If the device
+clock is invalid, monthly figures are unavailable rather than inferred from the
+last session. The seven-day bar chart remains a rolling seven-day view.
 
 ### Custom sleep-screen choice (V1 firmware)
 
