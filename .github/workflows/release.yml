@@ -50,4 +50,4 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" dist/reading-statistics-*.zip \
             --title "$GITHUB_REF_NAME" \
-            --notes "Reading Statistics v0.1.7 adds an optional Home button on firmware exposing home.shortcuts.v1, configurable in Settings > Display > Home Menu Buttons. The six-page offline dashboard, sleep-screen support, and reading history remain unchanged. Requires stats.native.v1 and ui.dashboard.v1; compatible firmware without home.shortcuts.v1 can open it from Home > Plugins."
+            --notes "Reading Statistics ${GITHUB_REF_NAME} includes the updated monthly Reading Calendar, time-of-day charts, and book-specific dashboard metrics. Requires firmware advertising stats.native.v1 and ui.dashboard.v2. The dashboard remains offline and preserves existing reading history."

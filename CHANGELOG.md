@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.10 (pending release)
+
+- Require `ui.dashboard.v2` for Reading Statistics catalog discovery so firmware with only the older dashboard renderer is not offered the newer widgets.
+- Keep native statistics storage and the `reading-stats.v1` dashboard source unchanged. Existing installed plugins are not removed by catalog filtering.
+
 ## 0.1.9 (release)
 
 - Redesign Overall Statistics with compact Sessions and Page Turns cards, separated snapshot metrics, and a new Time of Day chart instead of duplicate Reading Time and Active Days cards.

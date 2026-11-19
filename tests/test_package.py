@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "reading-statistics.crosspoint-plugin"
-REQUIRED_CAPS = {"stats.native.v1", "ui.dashboard.v1"}
+REQUIRED_CAPS = {"stats.native.v1", "ui.dashboard.v2"}
 REQUIRED_FILES = {"manifest.json", "device.json", "README.md", "DETAILS.md"} | {
     f"icons/{name}.pbm" for name in ("book", "clock", "sessions", "turns", "calendar", "bars", "speed")
 }
@@ -73,6 +73,15 @@ class PluginPackageTests(unittest.TestCase):
             for widget in page["widgets"]:
                 if widget.get("field") == "qualified_turns":
                     self.assertEqual(widget["label"], "Page Turns")
+
+    def test_new_dashboard_widgets_require_v2_capability(self):
+        widgets = {
+            widget["type"] for page in self.device["dashboard"]["pages"]
+            for widget in page["widgets"]
+        }
+        self.assertTrue({"time_of_day", "month_calendar", "month_insights"} <= widgets)
+        self.assertIn("ui.dashboard.v2", self.manifest["compatibility"]["requires"])
+        self.assertNotIn("ui.dashboard.v1", self.manifest["compatibility"]["requires"])
 
     def test_bounded_icon_assets(self):
         icons = {w["icon"] for page in self.device["dashboard"]["pages"]

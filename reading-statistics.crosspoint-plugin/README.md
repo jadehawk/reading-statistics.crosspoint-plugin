@@ -9,10 +9,10 @@ Install by copying the complete payload, including its `icons/` folder, from the
 enable **Settings > Connectivity > Plugins**, then open
 **Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. The firmware launches the same native dashboard; if all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
 
-Requirements: firmware advertising both `stats.native.v1` and `ui.dashboard.v1`.
+Requirements: firmware advertising both `stats.native.v1` and `ui.dashboard.v2`.
 Compatibility depends on these capabilities, not the firmware name or version.
 Razor-Crest is a known compatible firmware when both are exposed. Firmware without either capability cannot render the dashboard; it may display the README instead.
-The `manifest.json` declares both required capabilities so Plugin Hub can filter out unsupported firmware.
+The `manifest.json` declares both required capabilities so Plugin Hub can filter out unsupported firmware. The dashboard source remains `reading-stats.v1`; `ui.dashboard.v2` is the renderer capability gate for the newer widgets.
 
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records
