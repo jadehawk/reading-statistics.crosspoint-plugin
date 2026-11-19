@@ -2,6 +2,12 @@
 
 An optional **offline, on-reader** Reading Statistics dashboard for compatible firmware. This repository holds the separately installable plugin payload. The firmware owns the native BIN statistics store and import engine; the plugin defines the dashboard's six pages, metric labels and widgets.
 
+## Dashboard preview
+
+[![Five photographed Reading Statistics screens, each showing the entire device](assets/screenshots/reading-statistics-contact-sheet.jpg)](assets/screenshots/reading-statistics-contact-sheet.jpg)
+
+Five real device photos in capture order (oldest first), cropped with the **entire reader and a small black border** intact, and scaled to the same height. Select the contact sheet to enlarge it, or view each photo: [Overall Statistics](assets/screenshots/01-overall-statistics.jpg) · [Current Book](assets/screenshots/02-current-book.jpg) · [Reading Calendar](assets/screenshots/03-reading-calendar.jpg) · [All Books](assets/screenshots/04-all-books.jpg) · [Import Statistics](assets/screenshots/05-import-statistics.jpg). The sixth dashboard page, **Your Week**, is not included in this photo set.
+
 ## Installable payload
 
 ```text
