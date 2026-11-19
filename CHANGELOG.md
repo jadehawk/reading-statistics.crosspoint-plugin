@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.10 (pending release)
+## 0.1.10 (release)
 
 - Require `ui.dashboard.v2` for Reading Statistics catalog discovery so firmware with only the older dashboard renderer is not offered the newer widgets.
 - Keep native statistics storage and the `reading-stats.v1` dashboard source unchanged. Existing installed plugins are not removed by catalog filtering.
