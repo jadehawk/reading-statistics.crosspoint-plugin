@@ -1,0 +1,13 @@
+{
+  "name": "reading-stats-sync",
+  "title": "Reading Statistics Sync",
+  "description": "Sync active reading sessions to your Techy-Notes account from stock CrossPoint firmware.",
+  "author": "Jadehawk",
+  "version": "0.1.0",
+  "files": [
+    "manifest.json",
+    "device.json",
+    "README.md",
+    "DETAILS.md"
+  ]
+}
