@@ -30,7 +30,7 @@ class CompanionTests(unittest.TestCase):
         self.assertIn("XXXX-XXXX", self.device["auth"]["manual_hint"])
         self.assertIn("sync-beta.techy-notes.com/link", self.device["auth"]["display_url"])
 
-    def test_event_uses_auth_and_safe_identity_without_book_paths(self):
+    def test_event_uses_auth_and_transmits_book_path_only_to_private_endpoint(self):
         event = self.device["events"]["reader.session"]
         self.assertTrue(event["connect"])
         req = event["request"]
@@ -38,7 +38,9 @@ class CompanionTests(unittest.TestCase):
         self.assertEqual(req["headers"]["Authorization"], "Bearer {token}")
         self.assertIn("{event.id}", req["body"])
         self.assertIn("{event.document}", req["body"])
-        self.assertNotIn("{event.book}", req["body"])
+        self.assertIn("{event.book}", req["body"])
+        self.assertEqual(json.loads(req["body"])["book"], "{event.book}")
+        self.assertIn("/api/device/sessions", req["url"])
         hosts = {part["url"].split("/")[2] for part in (
             self.device["auth"]["request"], self.device["auth"]["poll"],
             self.device["browse"], req)}

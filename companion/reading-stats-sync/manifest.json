@@ -1,7 +1,7 @@
 {
   "name": "reading-stats-sync",
   "title": "Reading Statistics Sync",
-  "description": "Sync active reading sessions to your Techy-Notes account from stock CrossPoint firmware.",
+  "description": "Send active reading sessions to Techy-Notes without KOSync or a web account.",
   "author": "Jadehawk",
   "version": "0.1.0",
   "files": [
