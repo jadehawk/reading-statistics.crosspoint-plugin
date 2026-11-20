@@ -1,19 +1,13 @@
 {
   "name": "reading-statistics",
   "title": "Reading Statistics",
-  "description": "Offline reading statistics dashboard with native BIN history and CrossInk/vCodex import.",
+  "description": "Offline reading stats on capable firmware; optional reader session sync on compatible CrossPoint.",
   "author": "Jadehawk",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "home_shortcut": {
     "label": "Reading Statistics",
     "target": "dashboard",
     "icon": "stats"
-  },
-  "compatibility": {
-    "requires": [
-      "stats.native.v1",
-      "ui.dashboard.v2"
-    ]
   },
   "files": [
     "manifest.json",

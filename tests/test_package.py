@@ -6,7 +6,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "reading-statistics.crosspoint-plugin"
-REQUIRED_CAPS = {"stats.native.v1", "ui.dashboard.v2"}
 REQUIRED_FILES = {"manifest.json", "device.json", "README.md", "DETAILS.md"} | {
     f"icons/{name}.pbm" for name in ("book", "clock", "sessions", "turns", "calendar", "bars", "speed")
 }
@@ -23,9 +22,9 @@ class PluginPackageTests(unittest.TestCase):
         self.assertEqual(meta["name"], "reading-statistics")
         self.assertEqual(PLUGIN.name, meta["name"] + ".crosspoint-plugin")
         self.assertRegex(meta["version"], r"^\d+\.\d+\.\d+$")
-        self.assertEqual(set(meta["compatibility"]), {"requires"})
-        self.assertNotIn("firmware", meta["compatibility"])
-        self.assertEqual(set(meta["compatibility"]["requires"]), REQUIRED_CAPS)
+        # Enhanced native dashboard is optional; baseline firmware must see the
+        # same plugin through the ordinary browse/auth/event sections.
+        self.assertNotIn("compatibility", meta)
         self.assertEqual(set(meta["files"]), REQUIRED_FILES)
         for name in meta["files"]:
             self.assertRegex(name, r"^[A-Za-z0-9._/-]+$")
@@ -44,16 +43,17 @@ class PluginPackageTests(unittest.TestCase):
         pages = doc["dashboard"]["pages"]
         self.assertEqual([p["title"] for p in pages], [
             "Overall Statistics", "Current Book", "Your Week",
-            "Reading Calendar", "All Books", "Import Statistics"
+            "Reading Calendar", "All Books", "Import Statistics", "Server Sync"
         ])
         self.assertTrue(all(0 < len(p["widgets"]) <= 6 for p in pages))
         self.assertEqual([w["type"] for w in pages[4]["widgets"]], ["book_list"])
         self.assertEqual([w["type"] for w in pages[5]["widgets"]], ["legacy_import"])
+        self.assertEqual([w["type"] for w in pages[6]["widgets"]], ["server_sync"])
         self.assertEqual(pages[3]["title"], "Reading Calendar")
         self.assertEqual([w["type"] for w in pages[3]["widgets"]],
                          ["month_calendar", "month_insights"])
         self.assertLessEqual((PLUGIN / "device.json").stat().st_size, 8192)
-        known = {"metric", "hero", "reading_snapshot", "week_bars", "time_of_day", "month_calendar", "month_insights", "book_list", "legacy_import"}
+        known = {"metric", "hero", "reading_snapshot", "week_bars", "time_of_day", "month_calendar", "month_insights", "book_list", "legacy_import", "server_sync"}
         self.assertTrue(all(w["type"] in known for p in pages for w in p["widgets"]))
         self.assertEqual(
             [w.get("label", "") for w in pages[0]["widgets"]],
@@ -74,14 +74,14 @@ class PluginPackageTests(unittest.TestCase):
                 if widget.get("field") == "qualified_turns":
                     self.assertEqual(widget["label"], "Page Turns")
 
-    def test_new_dashboard_widgets_require_v2_capability(self):
+    def test_native_dashboard_widgets_are_optional_on_stock_crosspoint(self):
         widgets = {
             widget["type"] for page in self.device["dashboard"]["pages"]
             for widget in page["widgets"]
         }
         self.assertTrue({"time_of_day", "month_calendar", "month_insights"} <= widgets)
-        self.assertIn("ui.dashboard.v2", self.manifest["compatibility"]["requires"])
-        self.assertNotIn("ui.dashboard.v1", self.manifest["compatibility"]["requires"])
+        self.assertNotIn("compatibility", self.manifest)
+        self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
 
     def test_bounded_icon_assets(self):
         icons = {w["icon"] for page in self.device["dashboard"]["pages"]

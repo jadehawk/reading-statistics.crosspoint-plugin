@@ -1,6 +1,6 @@
 {
   "title": "Reading Statistics",
-  "description": "Local reading habits, daily activity, and page turns",
+  "description": "Offline reading statistics with optional Techy-Notes server sync",
   "dashboard": {
     "source": "reading-stats.v1",
     "pages": [
@@ -162,7 +162,68 @@
             "label": "Legacy data preview"
           }
         ]
+      },
+      {
+        "title": "Server Sync",
+        "widgets": [
+          {
+            "type": "server_sync",
+            "label": "Techy-Notes server pairing"
+          }
+        ]
       }
     ]
+  },
+  "token": {
+    "file": "/.crosspoint/reading-statistics-token.json",
+    "path": "token",
+    "persist": true
+  },
+  "auth": {
+    "type": "device_code",
+    "request": {
+      "url": "https://sync-beta.techy-notes.com/api/device/code",
+      "method": "POST"
+    },
+    "poll": {
+      "url": "https://sync-beta.techy-notes.com/api/device/token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\"device_code\":\"{device_code}\"}"
+    },
+    "display_url": "sync-beta.techy-notes.com/link",
+    "qr_hint": "Scan to pair your reader with Techy-Notes",
+    "manual_hint": "Enter the XXXX-XXXX code on the website"
+  },
+  "browse": {
+    "format": "json",
+    "url": "https://sync-beta.techy-notes.com/api/device/catalog",
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "items": "items",
+    "fields": {
+      "title": "title",
+      "author": "subtitle",
+      "description": "description",
+      "id": "id"
+    },
+    "page_size": 8
+  },
+  "events": {
+    "reader.session": {
+      "request": {
+        "method": "POST",
+        "url": "https://sync-beta.techy-notes.com/api/device/sessions",
+        "headers": {
+          "Authorization": "Bearer {token}",
+          "Content-Type": "application/json"
+        },
+        "body": "{\"v\":\"1\",\"id\":\"{event.id}\",\"document\":\"{event.document}\",\"start_time\":\"{event.start_time}\",\"end_time\":\"{event.end_time}\",\"duration_seconds\":\"{event.duration_seconds}\",\"start_progress_bp\":\"{event.start_progress_bp}\",\"end_progress_bp\":\"{event.end_progress_bp}\",\"book\":\"{event.book}\"}"
+      },
+      "connect": true
+    }
   }
 }

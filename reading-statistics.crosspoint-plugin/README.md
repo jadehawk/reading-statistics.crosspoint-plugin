@@ -1,7 +1,6 @@
 # Reading Statistics
 
-This is an optional **on-device** statistics dashboard. It is declarative;
-no code runs from the SD card and no server or Wi-Fi connection is needed.
+This is a **dual-mode** Reading Statistics plugin. With `stats.native.v1` and `ui.dashboard.v2`, it provides the complete offline native dashboard plus an optional Server Sync page. On stock CrossPoint, it instead uses the native device-code pairing and catalog UI to upload `reader.session` events. No executable code is installed on the SD card.
 
 Install by copying the complete payload, including its `icons/` folder, from the standalone
 `reading-statistics.crosspoint-plugin/` payload folder into
@@ -9,10 +8,7 @@ Install by copying the complete payload, including its `icons/` folder, from the
 enable **Settings > Connectivity > Plugins**, then open
 **Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. The firmware launches the same native dashboard; if all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
 
-Requirements: firmware advertising both `stats.native.v1` and `ui.dashboard.v2`.
-Compatibility depends on these capabilities, not the firmware name or version.
-Razor-Crest is a known compatible firmware when both are exposed. Firmware without either capability cannot render the dashboard; it may display the README instead.
-The `manifest.json` declares both required capabilities so Plugin Hub can filter out unsupported firmware. The dashboard source remains `reading-stats.v1`; `ui.dashboard.v2` is the renderer capability gate for the newer widgets.
+The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the seventh **Server Sync** page requires the updated Razor-Crest native dashboard renderer. The plugin's manifest has no global capability gate so stock CrossPoint can use its basic pairing and session-upload interface. Existing Razor-Crest firmware limited to six pages must be upgraded before installing this dual-mode release.
 
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records
@@ -53,7 +49,7 @@ All Books directly shows cover thumbnails, title, author, reading time, and
 completion percentage; selecting a row opens the Current Book detail dashboard.
 For imported history with a moved EPUB, only an unambiguous title/author
 match recovers the Home cover, author, and progress; statistics stay separate.
-Dashboard order: **Overall Statistics → Current Book → Your Week → Reading Calendar → All Books → Import Statistics**.
+Dashboard order on updated Razor-Crest: **Overall Statistics → Current Book → Your Week → Reading Calendar → All Books → Import Statistics → Server Sync**.
 Reading Calendar displays the current device-local month with numbered Monday-first
 dates, four grayscale reading-time levels (none, under 15 minutes, 15–44 minutes,
 45+ minutes), and an outline for today. Future days are never attributed activity.
@@ -61,6 +57,20 @@ The monthly insights show the most-read day (duration/date), average reading tim
 per active day, and the share of elapsed calendar days with reading. If the device
 clock is invalid, monthly figures are unavailable rather than inferred from the
 last session. The seven-day bar chart remains a rolling seven-day view.
+
+## Server Sync and persistent pairing
+
+The same plugin can upload measured `reader.session` events to Techy-Notes **without KOSync**. Server pairing is optional; the offline dashboard never depends on the server. The beta endpoint is `https://sync-beta.techy-notes.com`.
+
+The pairing credential is now stored at **`/.crosspoint/reading-statistics-token.json`**, outside every plugin-install directory. Uninstalling/reinstalling Reading Statistics does **not** delete this token. The native offline BIN statistics remain under `/.crosspoint/reading-stats/`; that directory is protected and unavailable to ordinary plugins, including stock CrossPoint, so a separate persistent token file is required for dual-mode compatibility. Treat this token as a secret; never upload or publish it.
+
+**Existing Reading Statistics Sync companion users:**
+
+- **Razor-Crest with the updated seven-page renderer:** install the unified plugin, then open its dashboard **before** uninstalling the companion. It copies `/.crosspoint/plugins/reading-stats-sync/token.json` into the persistent file **only if no unified token exists**. A pending `events.jsonl` is copied into the new plugin directory only when that destination is empty; the legacy files are never removed. Companions installed under `/plugins/` or `/.plugins/` are also checked. Verify the Server Sync page recognizes your pairing and that uploads work before uninstalling the companion.
+- **Stock CrossPoint:** firmware doesn't have the native dashboard migrator. Before removing the companion, copy its `token.json` *as-is* to the persistent file named above, preserving the JSON `token` field. Do not overwrite an existing persistent token. Keep the companion installed and online until its pending event queue has emptied, or preserve its `events.jsonl` manually. Then install/reopen the unified plugin and confirm the same guest identity is shown.
+- Do not run both plugins indefinitely. They can subscribe to the same reading-session events; the server deduplicates repeated event IDs, but unnecessary duplicate uploads waste bandwidth.
+
+The separate legacy companion beta ZIP is retained for recovery and testing but is **not** part of the unified plugin's installable payload. We do not delete an old companion automatically.
 
 ### Custom sleep-screen choice (V1 firmware)
 
