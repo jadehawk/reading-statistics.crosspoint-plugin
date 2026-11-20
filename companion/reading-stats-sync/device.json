@@ -26,7 +26,7 @@
   },
   "browse": {
     "format": "json",
-    "url": "https://sync-beta.techy-notes.com/api/device/catalog?page={page}&limit={limit}",
+    "url": "https://sync-beta.techy-notes.com/api/device/catalog",
     "headers": {
       "Authorization": "Bearer {token}"
     },

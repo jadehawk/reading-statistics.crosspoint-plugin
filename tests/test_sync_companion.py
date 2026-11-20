@@ -26,7 +26,14 @@ class CompanionTests(unittest.TestCase):
         self.assertIn("/api/device/code", self.device["auth"]["request"]["url"])
         self.assertIn("/api/device/token", self.device["auth"]["poll"]["url"])
         self.assertIn("{device_code}", self.device["auth"]["poll"]["body"])
-        self.assertIn("/api/device/catalog", self.device["browse"]["url"])
+        self.assertEqual(self.device["browse"]["url"], "https://sync-beta.techy-notes.com/api/device/catalog")
+        self.assertEqual(self.device["browse"]["page_size"], 8)
+        # The server returns all eight summary rows; a templated page/limit URL
+        # makes CrossPoint assume another page after each full response.
+        # A static feed is sliced locally and terminates after these eight rows.
+        self.assertNotIn("{page}", self.device["browse"]["url"])
+        self.assertNotIn("{limit}", self.device["browse"]["url"])
+        self.assertNotIn("{offset}", self.device["browse"]["url"])
         self.assertIn("XXXX-XXXX", self.device["auth"]["manual_hint"])
         self.assertIn("sync-beta.techy-notes.com/link", self.device["auth"]["display_url"])
 

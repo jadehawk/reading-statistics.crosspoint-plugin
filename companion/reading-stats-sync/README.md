@@ -9,6 +9,8 @@ This optional companion is for **stock CrossPoint** firmware with the `reader.se
 
 The beta package deliberately targets `https://sync-beta.techy-notes.com`. After pairing, the private `/stats` dashboard shows Today, All-Time, streaks, daily averages, the last 30 days, a calendar heatmap, time-of-day/weekday charts and per-book progress when available. It will not work against the old production server until these endpoints have been deployed. It never needs the reader's KOSync password. New users can collect reading history anonymously with a server-side guest identity. Existing KOSync users can pair to their own account.
 
+The companion fetches the entire eight-row statistics catalog as a static feed. The firmware handles pagination locally; do not add `{page}` or `{limit}` to the catalog URL unless the server implements real paged responses. This prevents endlessly repeating the same statistics as new pages.
+
 The stock event queue is small and can discard old unsent events; it is not a substitute for the Razor-Crest native BIN history. Only measured sessions with a trustworthy clock are sent. If the reader is offline, events remain queued until a later connection (subject to firmware limits).
 
 **Returning to the web portal:** Open the paired plugin to see a fresh **Web Sign-in Code**. Enter that code in the Techy-Notes **Sign in with Reader PIN** form. The one-time code grants a browser session without revealing the device token, and expires after 10 minutes. A guest can later link an existing KOSync account under **Settings → Link existing account**, preserving the guest reading sessions. If the reader and all signed-in browsers are lost before linking, guest-only history may not be recoverable.
