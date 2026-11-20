@@ -64,13 +64,7 @@ The same plugin can upload measured `reader.session` events to Techy-Notes **wit
 
 The pairing credential is now stored at **`/.crosspoint/reading-statistics-token.json`**, outside every plugin-install directory. Uninstalling/reinstalling Reading Statistics does **not** delete this token. The native offline BIN statistics remain under `/.crosspoint/reading-stats/`; that directory is protected and unavailable to ordinary plugins, including stock CrossPoint, so a separate persistent token file is required for dual-mode compatibility. Treat this token as a secret; never upload or publish it.
 
-**Existing Reading Statistics Sync companion users:**
-
-- **Razor-Crest with the updated seven-page renderer:** install the unified plugin, then open its dashboard **before** uninstalling the companion. It copies `/.crosspoint/plugins/reading-stats-sync/token.json` into the persistent file **only if no unified token exists**. A pending `events.jsonl` is copied into the new plugin directory only when that destination is empty; the legacy files are never removed. Companions installed under `/plugins/` or `/.plugins/` are also checked. Verify the Server Sync page recognizes your pairing and that uploads work before uninstalling the companion.
-- **Stock CrossPoint:** firmware doesn't have the native dashboard migrator. Before removing the companion, copy its `token.json` *as-is* to the persistent file named above, preserving the JSON `token` field. Do not overwrite an existing persistent token. Keep the companion installed and online until its pending event queue has emptied, or preserve its `events.jsonl` manually. Then install/reopen the unified plugin and confirm the same guest identity is shown.
-- Do not run both plugins indefinitely. They can subscribe to the same reading-session events; the server deduplicates repeated event IDs, but unnecessary duplicate uploads waste bandwidth.
-
-The separate legacy companion beta ZIP is retained for recovery and testing but is **not** part of the unified plugin's installable payload. We do not delete an old companion automatically.
+**Upgrading a previously paired reader:** On Razor-Crest with the updated seven-page renderer, open Reading Statistics once before uninstalling the previous collector. Firmware copies an existing pairing credential to the persistent location only if no new credential exists; it also preserves pending events when their destination is empty. Original files are left untouched. On stock CrossPoint, first copy the older `token.json` (including its JSON `token` field) to the persistent path above, without replacing an existing token. Let queued uploads finish before uninstalling the old collector. Verify the unified plugin shows the same server identity before removing any older installation. Avoid keeping two event collectors installed simultaneously.
 
 ### Custom sleep-screen choice (V1 firmware)
 

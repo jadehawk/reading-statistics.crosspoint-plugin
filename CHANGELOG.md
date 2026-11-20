@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.11 (unified Reading Statistics)
+
+- Combine optional Techy-Notes device pairing, statistics browsing, and reader-session upload with the existing Reading Statistics plugin for both stock CrossPoint and Razor-Crest.
+- Add a seventh Server Sync page on capable Razor-Crest firmware without affecting the six offline statistics pages.
+- Persist the server pairing token outside the installable plugin folder so reinstalling Reading Statistics does not lose the connection.
+- Retire the standalone sync collector distribution and its packaging/test tooling; preserve existing pairings through documented migration.
+
 ## 0.1.10 (release)
 
 - Require `ui.dashboard.v2` for Reading Statistics catalog discovery so firmware with only the older dashboard renderer is not offered the newer widgets.
