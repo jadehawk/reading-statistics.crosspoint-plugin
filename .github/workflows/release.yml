@@ -50,4 +50,4 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" dist/reading-statistics-*.zip \
             --title "$GITHUB_REF_NAME" \
-            --notes "Reading Statistics v0.1.11 unifies the offline native dashboard and optional Techy-Notes server session sync in one plugin. Razor-Crest firmware with stats.native.v1 and ui.dashboard.v2 supports the enhanced seven-page local dashboard; compatible baseline CrossPoint can use pairing and server sync without native dashboard rendering. Persistent pairing credentials survive plugin reinstalls. Existing reading history remains intact. See README for migration instructions when replacing the retired standalone sync companion."
+            --notes "Reading Statistics v0.1.12 production endpoint correction: device pairing, authentication, catalog browsing, and reader.session uploads now target sync.techy-notes.com instead of the beta server. Offline dashboard and native firmware statistics are unchanged. Existing beta-only pairing tokens may require re-pairing with production; the persistent token file is preserved."

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.12 (production server endpoint hotfix)
+
+- Correct device-code pairing, token polling, catalog browsing, and `reader.session` event uploads to use `sync.techy-notes.com` instead of the beta server.
+- Keep the seven-page Razor-Crest dashboard and stock CrossPoint dual-mode behavior unchanged.
+- Keep the persistent pairing-token path unchanged. Readers paired only to beta may need to pair again on production; existing reading statistics are unaffected.
+
+
 ## 0.1.11 (unified Reading Statistics)
 
 - Combine optional Techy-Notes device pairing, statistics browsing, and reader-session upload with the existing Reading Statistics plugin for both stock CrossPoint and Razor-Crest.

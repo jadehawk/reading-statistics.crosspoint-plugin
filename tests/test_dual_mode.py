@@ -15,7 +15,7 @@ class UnifiedReadingStatsTests(unittest.TestCase):
 
     def test_one_installable_plugin_for_both_modes(self):
         self.assertEqual(self.manifest["name"], "reading-statistics")
-        self.assertEqual(self.manifest["version"], "0.1.11")
+        self.assertEqual(self.manifest["version"], "0.1.12")
         self.assertNotIn("compatibility", self.manifest)
         self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
         pages = self.device["dashboard"]["pages"]
@@ -48,6 +48,15 @@ class UnifiedReadingStatsTests(unittest.TestCase):
             self.device["events"]["reader.session"]["request"]["headers"]["Authorization"],
             "Bearer {token}",
         )
+
+    def test_published_server_sync_uses_production_endpoints(self):
+        production = "https://sync.techy-notes.com"
+        self.assertEqual(self.device["auth"]["request"]["url"], production + "/api/device/code")
+        self.assertEqual(self.device["auth"]["poll"]["url"], production + "/api/device/token")
+        self.assertEqual(self.device["auth"]["display_url"], "sync.techy-notes.com/link")
+        self.assertEqual(self.device["browse"]["url"], production + "/api/device/catalog")
+        self.assertEqual(self.device["events"]["reader.session"]["request"]["url"], production + "/api/device/sessions")
+        self.assertNotIn("sync-beta.techy-notes.com", json.dumps(self.device))
 
     def test_only_unified_distribution_is_present(self):
         self.assertFalse((ROOT / "companion").exists())

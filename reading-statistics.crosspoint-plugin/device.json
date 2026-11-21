@@ -182,24 +182,24 @@
   "auth": {
     "type": "device_code",
     "request": {
-      "url": "https://sync-beta.techy-notes.com/api/device/code",
+      "url": "https://sync.techy-notes.com/api/device/code",
       "method": "POST"
     },
     "poll": {
-      "url": "https://sync-beta.techy-notes.com/api/device/token",
+      "url": "https://sync.techy-notes.com/api/device/token",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json"
       },
       "body": "{\"device_code\":\"{device_code}\"}"
     },
-    "display_url": "sync-beta.techy-notes.com/link",
+    "display_url": "sync.techy-notes.com/link",
     "qr_hint": "Scan to pair your reader with Techy-Notes",
     "manual_hint": "Enter the XXXX-XXXX code on the website"
   },
   "browse": {
     "format": "json",
-    "url": "https://sync-beta.techy-notes.com/api/device/catalog",
+    "url": "https://sync.techy-notes.com/api/device/catalog",
     "headers": {
       "Authorization": "Bearer {token}"
     },
@@ -216,7 +216,7 @@
     "reader.session": {
       "request": {
         "method": "POST",
-        "url": "https://sync-beta.techy-notes.com/api/device/sessions",
+        "url": "https://sync.techy-notes.com/api/device/sessions",
         "headers": {
           "Authorization": "Bearer {token}",
           "Content-Type": "application/json"
