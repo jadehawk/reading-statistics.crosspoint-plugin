@@ -3,7 +3,7 @@
   "title": "Reading Statistics",
   "description": "Offline reading stats on capable firmware; optional reader session sync on compatible CrossPoint.",
   "author": "Jadehawk",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "home_shortcut": {
     "label": "Reading Statistics",
     "target": "dashboard",

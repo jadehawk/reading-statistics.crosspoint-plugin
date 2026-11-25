@@ -62,6 +62,20 @@ last session. The seven-day bar chart remains a rolling seven-day view.
 
 The same plugin can upload measured `reader.session` events to Techy-Notes **without KOSync**. Server pairing is optional; the offline dashboard never depends on the server. The production endpoint is `https://sync.techy-notes.com`. Existing beta-only pairing tokens may require re-pairing with production; keep the persistent token file intact.
 
+When a reader is paired, `sleep.enter` also requests one bounded,
+read-only account-wide statistics snapshot from Techy-Notes using the same
+persistent token. This runs in the firmware's existing background sleep
+event-drain path **after the sleep screen is drawn**. The result is atomically
+stored as `server-overview.json` inside the installed standard plugin folder,
+including if that folder is under `/.crosspoint/plugins`, `/plugins`, or
+`/.plugins`. A failed request preserves the last valid copy, and unpaired
+readers do not bring up Wi-Fi for this operation. The optional Dessen Rust
+0.6.7 app can display this cached snapshot on a memory-limited X3 without
+keeping Wi-Fi or TLS active while its 80-KiB guest runs. The native pairing
+screen remains the registration method for X3. Native/firmware refreshes
+unload the Dessen guest before making network requests. The cache expires
+visually after 24 hours via its server-provided `synced_at` timestamp.
+
 The pairing credential is now stored at **`/.crosspoint/reading-statistics-token.json`**, outside every plugin-install directory. Uninstalling/reinstalling Reading Statistics does **not** delete this token. The native offline BIN statistics remain under `/.crosspoint/reading-stats/`; that directory is protected and unavailable to ordinary plugins, including stock CrossPoint, so a separate persistent token file is required for dual-mode compatibility. Treat this token as a secret; never upload or publish it.
 
 **Upgrading a previously paired reader:** On Razor-Crest with the updated seven-page renderer, open Reading Statistics once before uninstalling the previous collector. Firmware copies an existing pairing credential to the persistent location only if no new credential exists; it also preserves pending events when their destination is empty. Original files are left untouched. On stock CrossPoint, first copy the older `token.json` (including its JSON `token` field) to the persistent path above, without replacing an existing token. Let queued uploads finish before uninstalling the old collector. Verify the unified plugin shows the same server identity before removing any older installation. Avoid keeping two event collectors installed simultaneously.
@@ -72,7 +86,9 @@ With this plugin installed and the Plugin System enabled, set **Sleep Screen**
 to **Custom** and select **Reading Statistics** under **Wallpaper
 Collection**. Firmware renders a fresh copy of the first page,
 **Overall Statistics**, from current native data as the e-ink sleep image on
-each normal sleep entry. No image file, Wi-Fi or external service is involved.
+each normal sleep entry. That **image generation** is local and does not
+depend on any external service; the optional separate paired-server snapshot
+download described above can reuse sleep Wi-Fi independently.
 The same V1 page renderer omits the navigation header, Back control and bottom
 button hints while retaining the centered Overall Statistics title. **Cover +
 Custom** also honors the live source; **Quick Resume** intentionally keeps its

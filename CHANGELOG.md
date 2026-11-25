@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.13 (native X3 sleep-time server snapshot)
+
+- Subscribe the unified plugin to `sleep.enter` and download the authenticated, read-only account-wide server overview into a bounded SD snapshot. The existing firmware sleep worker performs one saved-network connection attempt after painting the sleep screen; Dessen does not need Wi-Fi while open.
+- Keep the persistent reader pairing token outside the installable plugin directory. Resolve the snapshot destination relative to the installed plugin root, including `/.crosspoint/plugins`, `/plugins`, and `/.plugins`.
+- Atomic download/backup handling preserves the previous successful snapshot on network errors. Paired readers with no available Wi-Fi continue to show their local statistics.
+- The matching Razor-Crest firmware + Dessen Rust 0.6.7 app use this cache on X3. Standard CrossPoint's existing pairing/dashboard behavior remains intact. New source is staged for hardware verification; no release is generated.
+
+
 ## 0.1.12 (production server endpoint hotfix)
 
 - Correct device-code pairing, token polling, catalog browsing, and `reader.session` event uploads to use `sync.techy-notes.com` instead of the beta server.

@@ -213,6 +213,15 @@
     "page_size": 8
   },
   "events": {
+    "sleep.enter": {
+      "download": {
+        "url": "https://sync.techy-notes.com/api/device/overview",
+        "headers": {
+          "Authorization": "Bearer {token}"
+        },
+        "dest": "server-overview.json"
+      }
+    },
     "reader.session": {
       "request": {
         "method": "POST",

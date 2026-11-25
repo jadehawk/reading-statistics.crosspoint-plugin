@@ -15,7 +15,7 @@ class UnifiedReadingStatsTests(unittest.TestCase):
 
     def test_one_installable_plugin_for_both_modes(self):
         self.assertEqual(self.manifest["name"], "reading-statistics")
-        self.assertEqual(self.manifest["version"], "0.1.12")
+        self.assertEqual(self.manifest["version"], "0.1.13")
         self.assertNotIn("compatibility", self.manifest)
         self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
         pages = self.device["dashboard"]["pages"]
@@ -48,6 +48,11 @@ class UnifiedReadingStatsTests(unittest.TestCase):
             self.device["events"]["reader.session"]["request"]["headers"]["Authorization"],
             "Bearer {token}",
         )
+        sleep = self.device["events"]["sleep.enter"]["download"]
+        self.assertEqual(sleep["url"], "https://sync.techy-notes.com/api/device/overview")
+        self.assertEqual(sleep["headers"]["Authorization"], "Bearer {token}")
+        self.assertEqual(sleep["dest"], "server-overview.json")
+        self.assertNotIn("request", self.device["events"]["sleep.enter"])
 
     def test_published_server_sync_uses_production_endpoints(self):
         production = "https://sync.techy-notes.com"
