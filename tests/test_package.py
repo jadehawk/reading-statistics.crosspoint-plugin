@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "reading-statistics.crosspoint-plugin"
-REQUIRED_FILES = {"manifest.json", "device.json", "README.md", "DETAILS.md"} | {
+REQUIRED_FILES = {"manifest.json", "device.json", "README.md", "DETAILS.md", "app.bin"} | {
     f"icons/{name}.pbm" for name in ("book", "clock", "sessions", "turns", "calendar", "bars", "speed")
 }
 
@@ -132,7 +132,7 @@ class PluginPackageTests(unittest.TestCase):
         self.assertFalse((PLUGIN / "plugin.js").exists())
         self.assertEqual(
             set(f.name for f in PLUGIN.iterdir()),
-            {"manifest.json", "device.json", "README.md", "DETAILS.md", "icons"}
+            {"manifest.json", "device.json", "README.md", "DETAILS.md", "icons", "app.bin"}
         )
         text = (PLUGIN / "README.md").read_text(encoding="utf-8")
         self.assertIn("/.crosspoint/plugins/reading-statistics/", text)

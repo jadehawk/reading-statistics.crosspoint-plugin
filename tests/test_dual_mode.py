@@ -15,7 +15,12 @@ class UnifiedReadingStatsTests(unittest.TestCase):
 
     def test_one_installable_plugin_for_both_modes(self):
         self.assertEqual(self.manifest["name"], "reading-statistics")
-        self.assertEqual(self.manifest["version"], "0.1.13")
+        self.assertEqual(self.manifest["version"], "0.6.35")
+        self.assertEqual(self.manifest["id"], self.manifest["name"])
+        self.assertEqual(self.device["version"], self.manifest["version"])
+        self.assertEqual(self.device["dessen"], {"entry": "app.bin"})
+        self.assertIn(self.device["dessen"]["entry"], self.manifest["files"])
+        self.assertEqual(self.manifest["permissions"]["credentials"]["shared"], [TOKEN])
         self.assertNotIn("compatibility", self.manifest)
         self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
         pages = self.device["dashboard"]["pages"]

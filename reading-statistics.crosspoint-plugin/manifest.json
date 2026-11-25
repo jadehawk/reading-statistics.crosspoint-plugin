@@ -3,7 +3,7 @@
   "title": "Reading Statistics",
   "description": "Offline reading stats on capable firmware; optional reader session sync on compatible CrossPoint.",
   "author": "Jadehawk",
-  "version": "0.1.13",
+  "version": "0.6.35",
   "home_shortcut": {
     "label": "Reading Statistics",
     "target": "dashboard",
@@ -20,6 +20,35 @@
     "icons/turns.pbm",
     "icons/calendar.pbm",
     "icons/bars.pbm",
-    "icons/speed.pbm"
-  ]
+    "icons/speed.pbm",
+    "app.bin"
+  ],
+  "id": "reading-statistics",
+  "permissions": {
+    "filesystem": {
+      "app_directory": [
+        "read",
+        "write",
+        "delete",
+        "list"
+      ],
+      "read": [
+        "/.crosspoint/reading-stats/**",
+        "/.crosspoint/reading_sessions.jsonl",
+        "/Books/**"
+      ]
+    },
+    "library": true,
+    "credentials": {
+      "shared": [
+        "/.crosspoint/reading-statistics-token.json"
+      ]
+    },
+    "network": {
+      "origins": [
+        "https://sync.techy-notes.com"
+      ],
+      "handoff": true
+    }
+  }
 }

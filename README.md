@@ -14,6 +14,7 @@ Five real device photos in capture order (oldest first), cropped with the **enti
 reading-statistics.crosspoint-plugin/
   manifest.json
   device.json
+  app.bin
   README.md
   DETAILS.md
   icons/
@@ -44,11 +45,19 @@ The pairing credential is now stored at **`/.crosspoint/reading-statistics-token
 
 ## Optional Home shortcut
 
-On firmware exposing `home.shortcuts.v1`, the plugin can register a **Reading Statistics** Home button that opens the native dashboard. Manage visible buttons and free space through **Settings > Display > Home Menu Buttons**. Firmware without this optional shortcut primitive still supports launching from **Home > Plugins** when it exposes the required statistics/dashboard capabilities. Uninstalling the plugin removes its shortcut without deleting reading records.
+On firmware exposing `home.shortcuts.v1`, the plugin can register a **Reading Statistics** Home button. Razor-Crest launches the bundled Dessen app when its engine is enabled and the app is installed. Other builds with the Home shortcut feature open the native SD dashboard. Manage visible buttons and free space through **Settings > Display > Home Menu Buttons**. Firmware without this optional shortcut primitive still supports launching from **Home > Plugins** when it exposes the required statistics/dashboard capabilities. Uninstalling the plugin removes its shortcut without deleting reading records.
+
+## Stats on Sleep
+
+On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The plugin leaves the SD card's root `/sleep.bmp` in place.
 
 ## Publishing
 
 This repository follows the Plugin Hub standalone-plugin contract. The public GitHub repository, `crosspoint-plugin` topic, and a stable GitHub Release tag matching the version in `manifest.json` make the plugin eligible for automatic catalog discovery. The manifest deliberately does not require native dashboard capabilities, allowing the same package to offer pairing and session sync on baseline CrossPoint. No GitHub access is required for local sideloading.
+
+## Rebuild the bundled Dessen app
+
+From the matching Razor-Crest `dessen-runtime` checkout with its Dessen SDK and RISC-V tools available, run `make -C experiments/reading-statistics-dessen-rust -B test` with the Dessen host runner built. Copy `experiments/reading-statistics-dessen-rust/build/app.bin` into `reading-statistics.crosspoint-plugin/` before packaging.
 
 ## Validate locally
 

@@ -1,14 +1,18 @@
 # Reading Statistics
 
-This is a **dual-mode** Reading Statistics plugin. With `stats.native.v1` and `ui.dashboard.v2`, it provides the complete offline native dashboard plus an optional Server Sync page. On stock CrossPoint, it instead uses the native device-code pairing and catalog UI to upload `reader.session` events. No executable code is installed on the SD card.
+This is a **dual-mode** Reading Statistics plugin. With `stats.native.v1` and `ui.dashboard.v2`, it provides the complete offline native dashboard plus an optional Server Sync page. On stock CrossPoint, it instead uses the native device-code pairing and catalog UI to upload `reader.session` events. The same package includes `app.bin` for firmware with the Dessen engine.
 
 Install by copying the complete payload, including its `icons/` folder, from the standalone
 `reading-statistics.crosspoint-plugin/` payload folder into
 `/.crosspoint/plugins/reading-statistics/` on the SD card. In firmware,
 enable **Settings > Connectivity > Plugins**, then open
-**Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. The firmware launches the same native dashboard; if all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
+**Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. Razor-Crest opens the Dessen app when the engine is enabled and the app is installed. Firmware with Home shortcuts can otherwise open the native SD dashboard. If all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
 
 The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the seventh **Server Sync** page requires the updated Razor-Crest native dashboard renderer. The plugin's manifest has no global capability gate so stock CrossPoint can use its basic pairing and session-upload interface. Existing Razor-Crest firmware limited to six pages must be upgraded before installing this dual-mode release.
+
+The Dessen entry in `device.json` describes the bundled `app.bin`, and `manifest.json` declares its permissions and lists it for installation. The SD dashboard and Dessen app share the persistent pairing file.
+
+On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The plugin leaves the SD card's root `/sleep.bmp` in place.
 
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records

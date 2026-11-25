@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.6.35
+
+- Traverse the settings rows in screen order with physical buttons so Stats on Sleep follows Auto-fetch.
+
+## 0.6.34
+
+- Add the opt-in Stats on Sleep setting on compatible Razor-Crest firmware. The app captures the server or device statistics page and stores it inside its plugin folder.
+
+## 0.6.33
+
+- Disconnect the reader offline by clearing its saved pairing and cached server data. Local reading history is preserved.
+
+## 0.6.32
+
+- Bundle the SD dashboard and Dessen app in one Reading Statistics installation. Razor-Crest with the Dessen engine opens the app from the existing Reading Statistics Home shortcut.
+- Both modes use the same persistent Techy-Notes pairing file. The SD definition keeps the local dashboard and sleep overview available.
+
 ## 0.1.13 (native X3 sleep-time server snapshot)
 
 - Subscribe the unified plugin to `sleep.enter` and download the authenticated, read-only account-wide server overview into a bounded SD snapshot. The existing firmware sleep worker performs one saved-network connection attempt after painting the sleep screen; Dessen does not need Wi-Fi while open.
