@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.36
+
+- Use one release version for the SD dashboard and Dessen app. X3 and X4 Dessen testing passed on the CrossPoint test firmware, with automatic sleep capture available on Razor-Crest.
+
 ## 0.6.35
 
 - Traverse the settings rows in screen order with physical buttons so Stats on Sleep follows Auto-fetch.
