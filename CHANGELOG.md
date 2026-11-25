@@ -1,33 +1,10 @@
 # Changelog
 
-## 0.6.36
+## 0.1.13
 
-- Use one release version for the SD dashboard and Dessen app. X3 and X4 Dessen testing passed on the CrossPoint test firmware, with automatic sleep capture available on Razor-Crest.
-
-## 0.6.35
-
-- Traverse the settings rows in screen order with physical buttons so Stats on Sleep follows Auto-fetch.
-
-## 0.6.34
-
-- Add the opt-in Stats on Sleep setting on compatible Razor-Crest firmware. The app captures the server or device statistics page and stores it inside its plugin folder.
-
-## 0.6.33
-
-- Disconnect the reader offline by clearing its saved pairing and cached server data. Local reading history is preserved.
-
-## 0.6.32
-
-- Bundle the SD dashboard and Dessen app in one Reading Statistics installation. Razor-Crest with the Dessen engine opens the app from the existing Reading Statistics Home shortcut.
-- Both modes use the same persistent Techy-Notes pairing file. The SD definition keeps the local dashboard and sleep overview available.
-
-## 0.1.13 (native X3 sleep-time server snapshot)
-
-- Subscribe the unified plugin to `sleep.enter` and download the authenticated, read-only account-wide server overview into a bounded SD snapshot. The existing firmware sleep worker performs one saved-network connection attempt after painting the sleep screen; Dessen does not need Wi-Fi while open.
-- Keep the persistent reader pairing token outside the installable plugin directory. Resolve the snapshot destination relative to the installed plugin root, including `/.crosspoint/plugins`, `/plugins`, and `/.plugins`.
-- Atomic download/backup handling preserves the previous successful snapshot on network errors. Paired readers with no available Wi-Fi continue to show their local statistics.
-- The matching Razor-Crest firmware + Dessen Rust 0.6.7 app use this cache on X3. Standard CrossPoint's existing pairing/dashboard behavior remains intact. New source is staged for hardware verification; no release is generated.
-
+- Bundle the SD dashboard and the Dessen app in one Reading Statistics plugin. Compatible firmware gives the Dessen app priority, while standard CrossPoint retains the basic pairing, catalog, and session sync.
+- Keep the persistent Techy-Notes pairing file shared across both modes. The Dessen app can disconnect offline and preserves local reading history.
+- Add opt-in Stats on Sleep on compatible Razor-Crest firmware. The plugin captures its statistics page and stores the image separately from the user's root wallpaper.
 
 ## 0.1.12 (production server endpoint hotfix)
 

@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate payload and dashboard
-        run: python tests/test_package.py
+        run: python -m unittest discover -s tests
       - name: Package plugin
         run: python tools/package.py
       - name: Upload ZIP artifact
@@ -48,6 +48,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/reading-statistics-*.zip \
-            --title "$GITHUB_REF_NAME" \
-            --notes "Reading Statistics v0.1.12 production endpoint correction: device pairing, authentication, catalog browsing, and reader.session uploads now target sync.techy-notes.com instead of the beta server. Offline dashboard and native firmware statistics are unchanged. Existing beta-only pairing tokens may require re-pairing with production; the persistent token file is preserved."
+          version="${GITHUB_REF_NAME#v}"
+          notes="$RUNNER_TEMP/reading-statistics-release-notes.md"
+          awk -v header="## $version" '
+            $0 == header { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > "$notes"
+          if ! grep -q '[^[:space:]]' "$notes"; then
+            echo "Missing release notes for $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
+          gh release create "$GITHUB_REF_NAME" "dist/reading-statistics-$version.zip" \
+            --verify-tag --title "$GITHUB_REF_NAME" --notes-file "$notes"
