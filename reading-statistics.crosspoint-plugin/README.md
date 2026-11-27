@@ -12,7 +12,7 @@ The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the sev
 
 The Dessen entry in `device.json` describes the bundled `app.bin`, and `manifest.json` declares its permissions and lists it for installation. v0.1.14 bundles the compact Rust application (83 KiB guest allocation). The SD dashboard and Dessen app share the persistent pairing file. On the updated Razor-Crest firmware, **Upload & refresh** uploads this reader's own JSONL history in resumable batches and refreshes server totals from the receipt. The optional identity grants enable this operation only on capable hosts. The top-level `events_fallback_only` flag prevents the updated firmware from running declarative session and sleep events alongside the Dessen app. Stock CrossPoint ignores the flag and retains SD pairing and measured-session upload. Do not use cumulative upload on older firmware lacking this fallback guard.
 
-On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The plugin leaves the SD card's root `/sleep.bmp` in place.
+On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The app uses generic capture and rename to publish the selected page to `/sleep.bmp`, preserving the original custom image as `/sleep-backup.bmp` and restoring it when disabled.
 
 `device.json` controls page titles, metric order, labels, and which
 generic widgets are displayed. Firmware supplies only the local records
@@ -79,7 +79,7 @@ The pairing credential is now stored at **`/.crosspoint/reading-statistics-token
 
 **Upgrading a previously paired reader:** On Razor-Crest with the updated seven-page renderer, open Reading Statistics once before uninstalling the previous collector. Firmware copies an existing pairing credential to the persistent location only if no new credential exists; it also preserves pending events when their destination is empty. Original files are left untouched. On stock CrossPoint, first copy the older `token.json` (including its JSON `token` field) to the persistent path above, without replacing an existing token. Let queued uploads finish before uninstalling the old collector. Verify the unified plugin shows the same server identity before removing any older installation. Avoid keeping two event collectors installed simultaneously.
 
-### Custom sleep-screen choice (V1 firmware)
+### Legacy native SD dashboard sleep-screen choice (not Dessen)
 
 With this plugin installed and the Plugin System enabled, set **Sleep Screen**
 to **Custom** and select **Reading Statistics** under **Wallpaper
