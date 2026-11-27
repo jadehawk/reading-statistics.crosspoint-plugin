@@ -2,6 +2,9 @@
 
 ## 0.1.14
 
+- Add detailed book actions, local hide/temporary removal and restore without deleting books or history.
+- Add the expanded calendar and cached book details; use generic framebuffer capture and rename for the selected sleep page, preserving and restoring the original custom wallpaper.
+
 - Update the full dual-mode plugin with the compact 83 KiB Dessen application, preserving SD fallback, pairing credentials, Home shortcut, catalog and sleep integration.
 - Support physical reader identity, native JSONL statistics and resumable cumulative history uploads on compatible firmware.
 - Open Server Statistics after successful pairing, completed history upload and refresh, or explicit refresh; retain the current page on failure or cancellation.

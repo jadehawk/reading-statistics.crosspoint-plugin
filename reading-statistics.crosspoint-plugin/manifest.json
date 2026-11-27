@@ -34,7 +34,17 @@
       ],
       "read": [
         "/.crosspoint/reading_sessions.jsonl",
-        "/Books/**"
+        "/Books/**",
+        "/sleep.bmp",
+        "/sleep-backup.bmp"
+      ],
+      "write": [
+        "/sleep.bmp",
+        "/sleep-backup.bmp"
+      ],
+      "delete": [
+        "/sleep.bmp",
+        "/sleep-backup.bmp"
       ]
     },
     "library": true,

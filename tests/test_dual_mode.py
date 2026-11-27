@@ -22,7 +22,11 @@ class UnifiedReadingStatsTests(unittest.TestCase):
         })
         self.assertEqual(self.manifest["permissions"]["filesystem"]["read"], [
             "/.crosspoint/reading_sessions.jsonl", "/Books/**",
+            "/sleep.bmp", "/sleep-backup.bmp",
         ])
+        for action in ("write", "delete"):
+            self.assertEqual(self.manifest["permissions"]["filesystem"][action],
+                             ["/sleep.bmp", "/sleep-backup.bmp"])
         self.assertLessEqual((PAYLOAD / "manifest.json").stat().st_size, 4096)
         self.assertEqual(self.manifest["id"], self.manifest["name"])
         self.assertEqual(self.device["version"], self.manifest["version"])

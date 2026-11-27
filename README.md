@@ -49,7 +49,7 @@ On firmware exposing `home.shortcuts.v1`, the plugin can register a **Reading St
 
 ## Stats on Sleep
 
-On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The plugin leaves the SD card's root `/sleep.bmp` in place.
+On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The app uses the generic capture and rename services to publish the selected page to `/sleep.bmp`, preserving an existing custom image as `/sleep-backup.bmp` and restoring it when disabled.
 
 ## Publishing
 
