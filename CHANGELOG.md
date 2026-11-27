@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.14
+
+- Update the full dual-mode plugin with the compact 83 KiB Dessen application, preserving SD fallback, pairing credentials, Home shortcut, catalog and sleep integration.
+- Support physical reader identity, native JSONL statistics and resumable cumulative history uploads on compatible firmware.
+- Open Server Statistics after successful pairing, completed history upload and refresh, or explicit refresh; retain the current page on failure or cancellation.
+- Reserve declarative session and sleep events for fallback mode on firmware supporting the fallback-event guard.
+- Reduce guest memory and reuse shelf and network buffers; preserve local history and exact upload checkpoints.
+
 ## 0.1.13
 
 - Bundle the SD dashboard and the Dessen app in one Reading Statistics plugin. Compatible firmware gives the Dessen app priority, while standard CrossPoint retains the basic pairing, catalog, and session sync.

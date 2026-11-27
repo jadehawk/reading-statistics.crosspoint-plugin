@@ -10,7 +10,7 @@ enable **Settings > Connectivity > Plugins**, then open
 
 The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the seventh **Server Sync** page requires the updated Razor-Crest native dashboard renderer. The plugin's manifest has no global capability gate so stock CrossPoint can use its basic pairing and session-upload interface. Existing Razor-Crest firmware limited to six pages must be upgraded before installing this dual-mode release.
 
-The Dessen entry in `device.json` describes the bundled `app.bin`, and `manifest.json` declares its permissions and lists it for installation. The SD dashboard and Dessen app share the persistent pairing file.
+The Dessen entry in `device.json` describes the bundled `app.bin`, and `manifest.json` declares its permissions and lists it for installation. v0.1.14 bundles the compact Rust application (83 KiB guest allocation). The SD dashboard and Dessen app share the persistent pairing file. On the updated Razor-Crest firmware, **Upload & refresh** uploads this reader's own JSONL history in resumable batches and refreshes server totals from the receipt. The optional identity grants enable this operation only on capable hosts. The top-level `events_fallback_only` flag prevents the updated firmware from running declarative session and sleep events alongside the Dessen app. Stock CrossPoint ignores the flag and retains SD pairing and measured-session upload. Do not use cumulative upload on older firmware lacking this fallback guard.
 
 On Razor-Crest firmware with Dessen capture support, set the firmware sleep screen to Custom, then turn on **Stats on Sleep** in the Reading Statistics settings. The setting defaults to Off. The app updates its own sleep image after server stats refresh and on unpaired launches. Turning it off restores the firmware's regular wallpaper selection. The plugin leaves the SD card's root `/sleep.bmp` in place.
 
@@ -22,7 +22,7 @@ and widget renderer. This host supports `metric`, `reading_snapshot`,
 custom 80x80 monochrome binary PBM icons in `icons/`, plus `square`, `rounded` or
 `chamfered` borders and a 0..16-pixel corner radius. Metric-card titles are centered;
 80x80 high-resolution icon sources fill most of the card's available body area
-without requiring larger asset files. Optional `icon_size` (1–128) can request
+without requiring larger asset files. Optional `icon_size` (1Ã¢â‚¬â€œ128) can request
 smaller icons; the renderer always clamps icons to card bounds. See the firmware's
 `docs/dashboard-cards-v1.md` for the complete reusable card contract.
 The first page is titled **Overall Statistics** and shows a Reading Snapshot:
@@ -53,9 +53,9 @@ All Books directly shows cover thumbnails, title, author, reading time, and
 completion percentage; selecting a row opens the Current Book detail dashboard.
 For imported history with a moved EPUB, only an unambiguous title/author
 match recovers the Home cover, author, and progress; statistics stay separate.
-Dashboard order on updated Razor-Crest: **Overall Statistics → Current Book → Your Week → Reading Calendar → All Books → Import Statistics → Server Sync**.
+Dashboard order on updated Razor-Crest: **Overall Statistics Ã¢â€ â€™ Current Book Ã¢â€ â€™ Your Week Ã¢â€ â€™ Reading Calendar Ã¢â€ â€™ All Books Ã¢â€ â€™ Import Statistics Ã¢â€ â€™ Server Sync**.
 Reading Calendar displays the current device-local month with numbered Monday-first
-dates, four grayscale reading-time levels (none, under 15 minutes, 15–44 minutes,
+dates, four grayscale reading-time levels (none, under 15 minutes, 15Ã¢â‚¬â€œ44 minutes,
 45+ minutes), and an outline for today. Future days are never attributed activity.
 The monthly insights show the most-read day (duration/date), average reading time
 per active day, and the share of elapsed calendar days with reading. If the device
@@ -66,21 +66,16 @@ last session. The seven-day bar chart remains a rolling seven-day view.
 
 The same plugin can upload measured `reader.session` events to Techy-Notes **without KOSync**. Server pairing is optional; the offline dashboard never depends on the server. The production endpoint is `https://sync.techy-notes.com`. Existing beta-only pairing tokens may require re-pairing with production; keep the persistent token file intact.
 
-When a reader is paired, `sleep.enter` also requests one bounded,
+In SD fallback mode, when a reader is paired, `sleep.enter` also requests one bounded,
 read-only account-wide statistics snapshot from Techy-Notes using the same
 persistent token. This runs in the firmware's existing background sleep
 event-drain path **after the sleep screen is drawn**. The result is atomically
 stored as `server-overview.json` inside the installed standard plugin folder,
 including if that folder is under `/.crosspoint/plugins`, `/plugins`, or
 `/.plugins`. A failed request preserves the last valid copy, and unpaired
-readers do not bring up Wi-Fi for this operation. The optional Dessen Rust
-0.6.7 app can display this cached snapshot on a memory-limited X3 without
-keeping Wi-Fi or TLS active while its 80-KiB guest runs. The native pairing
-screen remains the registration method for X3. Native/firmware refreshes
-unload the Dessen guest before making network requests. The cache expires
-visually after 24 hours via its server-provided `synced_at` timestamp.
+readers do not bring up Wi-Fi for this operation. The Dessen app now performs its own pairing and refresh, including on X3/X4 using the firmware's network handoff. It can reuse the cached overview. Automatic refresh is optional and checks a 24-hour freshness window.
 
-The pairing credential is now stored at **`/.crosspoint/reading-statistics-token.json`**, outside every plugin-install directory. Uninstalling/reinstalling Reading Statistics does **not** delete this token. The native offline BIN statistics remain under `/.crosspoint/reading-stats/`; that directory is protected and unavailable to ordinary plugins, including stock CrossPoint, so a separate persistent token file is required for dual-mode compatibility. Treat this token as a secret; never upload or publish it.
+The pairing credential is now stored at **`/.crosspoint/reading-statistics-token.json`**, outside every plugin-install directory. Uninstalling/reinstalling Reading Statistics does **not** delete this token. Current Razor-Crest migrates native statistics to `/.crosspoint/reading_sessions.jsonl`; older native SD dashboard hosts own their BIN records under `/.crosspoint/reading-stats/`. The Dessen app reads JSONL history, not legacy BIN records. Treat this token as a secret; never upload or publish it.
 
 **Upgrading a previously paired reader:** On Razor-Crest with the updated seven-page renderer, open Reading Statistics once before uninstalling the previous collector. Firmware copies an existing pairing credential to the persistent location only if no new credential exists; it also preserves pending events when their destination is empty. Original files are left untouched. On stock CrossPoint, first copy the older `token.json` (including its JSON `token` field) to the persistent path above, without replacing an existing token. Let queued uploads finish before uninstalling the old collector. Verify the unified plugin shows the same server identity before removing any older installation. Avoid keeping two event collectors installed simultaneously.
 
@@ -121,7 +116,7 @@ source/book even if its file changes later. To prevent possible overlap, only
 one legacy firmware source can be imported into a native statistics database.
 Use a spare SD card for synthetic fixtures or risky migration tests.
 
-Back exits. Side Up/Down buttons change dashboard pages, including 5→6 and 6→1.
+Back exits. Side Up/Down buttons change dashboard pages, including 5Ã¢â€ â€™6 and 6Ã¢â€ â€™1.
 Front Previous/Next change pages except on All Books, where they select book rows.
 Confirm refreshes metric pages. On **All Books**, front Previous/Next select
 book rows and Confirm opens per-book details. On touch devices, horizontal

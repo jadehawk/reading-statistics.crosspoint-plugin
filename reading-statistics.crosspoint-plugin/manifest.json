@@ -1,9 +1,9 @@
 {
   "name": "reading-statistics",
   "title": "Reading Statistics",
-  "description": "Offline reading stats on capable firmware; optional reader session sync on compatible CrossPoint.",
+  "description": "Dual-mode reading statistics, device pairing and optional server synchronization.",
   "author": "Jadehawk",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "home_shortcut": {
     "label": "Reading Statistics",
     "target": "dashboard",
@@ -33,7 +33,6 @@
         "list"
       ],
       "read": [
-        "/.crosspoint/reading-stats/**",
         "/.crosspoint/reading_sessions.jsonl",
         "/Books/**"
       ]
@@ -50,5 +49,9 @@
       ],
       "handoff": true
     }
+  },
+  "optional_permissions": {
+    "device_identity": true,
+    "history_identity": true
   }
 }

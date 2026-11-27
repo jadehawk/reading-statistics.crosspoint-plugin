@@ -212,6 +212,7 @@
     },
     "page_size": 8
   },
+  "events_fallback_only": true,
   "events": {
     "sleep.enter": {
       "download": {
@@ -235,7 +236,7 @@
       "connect": true
     }
   },
-  "version": "0.1.13",
+  "version": "0.1.14",
   "dessen": {
     "entry": "app.bin"
   }

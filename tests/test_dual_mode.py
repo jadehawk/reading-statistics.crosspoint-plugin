@@ -15,7 +15,15 @@ class UnifiedReadingStatsTests(unittest.TestCase):
 
     def test_one_installable_plugin_for_both_modes(self):
         self.assertEqual(self.manifest["name"], "reading-statistics")
-        self.assertEqual(self.manifest["version"], "0.1.13")
+        self.assertEqual(self.manifest["version"], "0.1.14")
+        self.assertIs(self.device["events_fallback_only"], True)
+        self.assertEqual(self.manifest["optional_permissions"], {
+            "device_identity": True, "history_identity": True,
+        })
+        self.assertEqual(self.manifest["permissions"]["filesystem"]["read"], [
+            "/.crosspoint/reading_sessions.jsonl", "/Books/**",
+        ])
+        self.assertLessEqual((PAYLOAD / "manifest.json").stat().st_size, 4096)
         self.assertEqual(self.manifest["id"], self.manifest["name"])
         self.assertEqual(self.device["version"], self.manifest["version"])
         self.assertEqual(self.device["dessen"], {"entry": "app.bin"})
