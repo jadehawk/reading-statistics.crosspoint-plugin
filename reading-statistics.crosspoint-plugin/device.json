@@ -1,6 +1,6 @@
 {
   "title": "Reading Statistics",
-  "description": "Offline reading statistics with optional Techy-Notes server sync",
+  "description": "Reading stats & sync (Dessen App)",
   "dashboard": {
     "source": "reading-stats.v1",
     "pages": [

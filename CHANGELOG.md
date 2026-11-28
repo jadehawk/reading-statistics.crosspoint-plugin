@@ -2,6 +2,9 @@
 
 ## 0.1.14
 
+- Require native reading statistics and dashboard v2 capabilities for Plugin Hub discovery; current Razor-Crest is the intended host while upstream Dessen integrations are pending.
+- Shorten the Plugin Hub description to Reading stats & sync (Dessen App).
+
 - Add detailed book actions, local hide/temporary removal and restore without deleting books or history.
 - Add the expanded calendar and cached book details; use generic framebuffer capture and rename for the selected sleep page, preserving and restoring the original custom wallpaper.
 

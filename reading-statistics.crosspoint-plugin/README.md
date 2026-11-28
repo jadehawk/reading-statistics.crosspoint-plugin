@@ -1,6 +1,6 @@
 # Reading Statistics
 
-This is a **dual-mode** Reading Statistics plugin. With `stats.native.v1` and `ui.dashboard.v2`, it provides the complete offline native dashboard plus an optional Server Sync page. On stock CrossPoint, it instead uses the native device-code pairing and catalog UI to upload `reader.session` events. The same package includes `app.bin` for firmware with the Dessen engine.
+This is a **Reading Statistics Dessen app** for current Razor-Crest firmware, with a native SD dashboard fallback. Server sync is optional. Version 0.1.14 requires `stats.native.v1` and `ui.dashboard.v2` for Plugin Hub discovery; stock CrossPoint is not yet supported by this release.
 
 Install by copying the complete payload, including its `icons/` folder, from the standalone
 `reading-statistics.crosspoint-plugin/` payload folder into
@@ -8,7 +8,7 @@ Install by copying the complete payload, including its `icons/` folder, from the
 enable **Settings > Connectivity > Plugins**, then open
 **Home > Plugins > Reading Statistics**. On firmware with Home Menu Buttons support, this plugin also registers an optional **Reading Statistics** Home shortcut. Razor-Crest opens the Dessen app when the engine is enabled and the app is installed. Firmware with Home shortcuts can otherwise open the native SD dashboard. If all Home slots are occupied, use **Settings > Display > Home Menu Buttons** to disable another button to make room, then enable Reading Statistics; buttons can also be reordered. Removing the plugin automatically removes the shortcut; no reading history is altered.
 
-The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the seventh **Server Sync** page requires the updated Razor-Crest native dashboard renderer. The plugin's manifest has no global capability gate so stock CrossPoint can use its basic pairing and session-upload interface. Existing Razor-Crest firmware limited to six pages must be upgraded before installing this dual-mode release.
+The **offline dashboard** needs `stats.native.v1` and `ui.dashboard.v2`; the seventh **Server Sync** page requires the updated Razor-Crest native dashboard renderer. The manifest requires both native dashboard capabilities for catalog discovery. Existing stock CrossPoint v0.1.13 installations are unaffected. Existing Razor-Crest firmware limited to six pages must be upgraded before installing this dual-mode release.
 
 The Dessen entry in `device.json` describes the bundled `app.bin`, and `manifest.json` declares its permissions and lists it for installation. v0.1.14 bundles the compact Rust application (83 KiB guest allocation). The SD dashboard and Dessen app share the persistent pairing file. On the updated Razor-Crest firmware, **Upload & refresh** uploads this reader's own JSONL history in resumable batches and refreshes server totals from the receipt. The optional identity grants enable this operation only on capable hosts. The top-level `events_fallback_only` flag prevents the updated firmware from running declarative session and sleep events alongside the Dessen app. Stock CrossPoint ignores the flag and retains SD pairing and measured-session upload. Do not use cumulative upload on older firmware lacking this fallback guard.
 

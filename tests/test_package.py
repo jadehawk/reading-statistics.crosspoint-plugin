@@ -22,9 +22,13 @@ class PluginPackageTests(unittest.TestCase):
         self.assertEqual(meta["name"], "reading-statistics")
         self.assertEqual(PLUGIN.name, meta["name"] + ".crosspoint-plugin")
         self.assertRegex(meta["version"], r"^\d+\.\d+\.\d+$")
-        # Enhanced native dashboard is optional; baseline firmware must see the
-        # same plugin through the ordinary browse/auth/event sections.
-        self.assertNotIn("compatibility", meta)
+        self.assertEqual(meta["compatibility"], {
+            "firmware_family": ["crosspoint"],
+            "plugin_api_min": 1,
+            "requires": ["stats.native.v1", "ui.dashboard.v2"],
+        })
+        self.assertEqual(meta["description"], "Reading stats & sync (Dessen App)")
+        self.assertEqual(self.device["description"], meta["description"])
         self.assertEqual(set(meta["files"]), REQUIRED_FILES)
         for name in meta["files"]:
             self.assertRegex(name, r"^[A-Za-z0-9._/-]+$")
@@ -74,13 +78,13 @@ class PluginPackageTests(unittest.TestCase):
                 if widget.get("field") == "qualified_turns":
                     self.assertEqual(widget["label"], "Page Turns")
 
-    def test_native_dashboard_widgets_are_optional_on_stock_crosspoint(self):
+    def test_native_dashboard_widgets_remain_available_on_compatible_firmware(self):
         widgets = {
             widget["type"] for page in self.device["dashboard"]["pages"]
             for widget in page["widgets"]
         }
         self.assertTrue({"time_of_day", "month_calendar", "month_insights"} <= widgets)
-        self.assertNotIn("compatibility", self.manifest)
+        self.assertEqual(self.manifest["compatibility"]["requires"], ["stats.native.v1", "ui.dashboard.v2"])
         self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
 
     def test_bounded_icon_assets(self):

@@ -33,7 +33,11 @@ class UnifiedReadingStatsTests(unittest.TestCase):
         self.assertEqual(self.device["dessen"], {"entry": "app.bin"})
         self.assertIn(self.device["dessen"]["entry"], self.manifest["files"])
         self.assertEqual(self.manifest["permissions"]["credentials"]["shared"], [TOKEN])
-        self.assertNotIn("compatibility", self.manifest)
+        self.assertEqual(self.manifest["compatibility"], {
+            "firmware_family": ["crosspoint"],
+            "plugin_api_min": 1,
+            "requires": ["stats.native.v1", "ui.dashboard.v2"],
+        })
         self.assertEqual(self.device["dashboard"]["source"], "reading-stats.v1")
         pages = self.device["dashboard"]["pages"]
         self.assertEqual(len(pages), 7)

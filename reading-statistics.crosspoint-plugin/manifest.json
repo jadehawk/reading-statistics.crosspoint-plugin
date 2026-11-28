@@ -1,9 +1,14 @@
 {
   "name": "reading-statistics",
   "title": "Reading Statistics",
-  "description": "Dual-mode reading statistics, device pairing and optional server synchronization.",
+  "description": "Reading stats & sync (Dessen App)",
   "author": "Jadehawk",
   "version": "0.1.14",
+  "compatibility": {
+    "firmware_family": ["crosspoint"],
+    "plugin_api_min": 1,
+    "requires": ["stats.native.v1", "ui.dashboard.v2"]
+  },
   "home_shortcut": {
     "label": "Reading Statistics",
     "target": "dashboard",
