@@ -2,6 +2,8 @@
 
 ## 0.1.15
 
+- Shorten the last refresh status to compact minute, hour and day labels; avoid truncation on Settings.
+
 - Fix calendar swipe direction: swipe left for the next month and right for the previous month.
 - Swiping left again at the current month opens All Books. Future months remain unavailable; physical keys and other page gestures are unchanged.
 
