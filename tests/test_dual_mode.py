@@ -15,7 +15,7 @@ class UnifiedReadingStatsTests(unittest.TestCase):
 
     def test_one_installable_plugin_for_both_modes(self):
         self.assertEqual(self.manifest["name"], "reading-statistics")
-        self.assertEqual(self.manifest["version"], "0.1.14")
+        self.assertEqual(self.manifest["version"], "0.1.15")
         self.assertIs(self.device["events_fallback_only"], True)
         self.assertEqual(self.manifest["optional_permissions"], {
             "device_identity": True, "history_identity": True,

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.15
+
+- Fix calendar swipe direction: swipe left for the next month and right for the previous month.
+- Swiping left again at the current month opens All Books. Future months remain unavailable; physical keys and other page gestures are unchanged.
+
 ## 0.1.14
 
 - Require native reading statistics and dashboard v2 capabilities for Plugin Hub discovery; current Razor-Crest is the intended host while upstream Dessen integrations are pending.

@@ -3,7 +3,7 @@
   "title": "Reading Statistics",
   "description": "Reading stats & sync (Dessen App)",
   "author": "Jadehawk",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "compatibility": {
     "firmware_family": ["crosspoint"],
     "plugin_api_min": 1,
